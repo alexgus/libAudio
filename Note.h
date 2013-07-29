@@ -1,8 +1,11 @@
-/*
+/**
  * Note.h
  *
  *  Created on: 29 juil. 2013
- *      Author: Alexandre
+ *      Author: Alexandre Guyon
+ *
+ *  Used to generate a pulse on arduino's pin. If you 're connecting
+ *  a speaker to it, you will hear the song of the freq.
  */
 
 #ifndef NOTE_H_
@@ -24,37 +27,66 @@
 #define Note_Ad 29.1
 #define Note_B 30.8
 
-// TODO Inclure silence
+// TODO Add timbre
 
 class Note
 {
 	public:
+		/**
+		 * Contructor of the class.
+		 * Used for frequence
+		 * @param pin The out pin
+		 * @param freq The frequance of the signam
+		 * @param time The  duration of the signal before stop (millis)
+		 */
 		Note(int pin, int freq, double time);
+
+		/**
+		 * Constructor of the class.
+		 * Used for Note
+		 * @param pin The out pin
+		 * @param note The defined note
+		 * @param octave The octave of the note
+		 * @param time The  duration of the signal before stop (millis)
+		 */
 		Note(int pin, float note, int octave, double time);
+
+		/**
+		 * Destructor
+		 */
 		virtual ~Note();
 
+		/**
+		 * Play the note
+		 */
 		void play();
 
 	private:
 		/**
 		 * The pin where is connected the speakers
 		 */
-		int pin;
+		int m_pin;
 
 		/**
-		 * The time of the period of the signal / 2
+		 * The time of the half period of the signal
 		 */
-		int tPeriod;
+		int m_tPeriod;
 
 		/**
-		 * Final time. The note have to play this time
+		 * The final time, note have to be hear
 		 */
-		double fTime;
+		double m_fTime;
 
 		/**
-		 * Current time of the note is playing
+		 * Current time at the begening of the note
 		 */
-		unsigned int cTime;
+		unsigned int m_cTime;
+
+		/**
+		 * Time of silent before and/or after the note
+		 * (microsecond)
+		 */
+		static const unsigned int SILENT_TIME = 100;
 };
 
 #endif /* NOTE_H_ */
